@@ -17,6 +17,13 @@ public class MyArrayList<E> extends MyAbstractCollection implements MyList, Rand
     private int size;
     private Object[] array;
 
+    @Override
+    public Object set(int index, Object element) {
+        boundCheck(index);
+        Object oldElement = array[index];
+        array[index] = element;
+        return oldElement;
+    }
 
     public MyArrayList() {
         this.array = EMPTY_ARRAY;
