@@ -65,7 +65,7 @@ public class MyArrayList<E> extends MyAbstractCollection implements MyList, Rand
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
         }
-        size--;
+        array[--size] = null;
         return removing;
     }
 
@@ -114,8 +114,34 @@ public class MyArrayList<E> extends MyAbstractCollection implements MyList, Rand
 
     @Override
     public boolean remove(Object o) {
+
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (array[i] == null) {
+                    moveArrayValuesLeft(i, size);
+                    size--;
+                    return true;
+                }
+            }
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (o.equals(array[i])) {
+                moveArrayValuesLeft(i, size);
+                size--;
+                return true;
+            }
+        }
         return false;
     }
+
+    private void moveArrayValuesLeft(int startIndex, int endIndex) {
+        for (int j = startIndex; j < endIndex - 1; j++) {
+            array[j] = array[j + 1];
+        }
+        array[endIndex - 1] = null;
+    }
+
 
     @Override
     public boolean isEmpty() {
